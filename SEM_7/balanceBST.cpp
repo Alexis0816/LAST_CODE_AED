@@ -1,10 +1,78 @@
 #include <iostream>
 #include <vector>
-#include <queue>
 #include <cassert>
 #include <cmath>
 #include <algorithm>
 using namespace std;
+
+template <class T>
+struct Node
+{
+  T val;
+  Node<T> *next;
+};
+
+template <class T>
+class Queue
+{
+  Node<T> *front;
+  Node<T> *rear;
+  int nodes;
+
+public:
+  Queue() : nodes(0) { front = rear = nullptr; }
+
+  int size()
+  {
+    return nodes;
+  }
+
+  T _front()
+  {
+    return front->val;
+  }
+
+  T _rear()
+  {
+    return rear->val;
+  }
+
+  bool empty()
+  {
+    return (!front && !rear) ? true : false;
+  }
+
+  void enqueue(T ele)
+  {
+    auto *temp = new Node<T>();
+    temp->val = ele;
+    temp->next = nullptr;
+
+    if (empty())
+      front = rear = temp;
+    else
+    {
+      rear->next = temp;
+      rear = temp;
+    }
+    nodes++;
+  };
+
+  void dequeue()
+  {
+    Node<T> *temp;
+    if (empty())
+      cout << endl << "Queue vacio." << endl;
+    else
+    {
+      temp = front;
+      if (front == rear)
+        rear = rear->next; // if length of queue is 1;
+      front = front->next;
+      nodes--;
+    }
+  };
+};
 
 struct TreeNode
 {
@@ -26,20 +94,20 @@ public:
 
     vector<int> nodes;
     // Realizamos un recorrido en anchura para obtener todos los nodos del árbol
-    queue<TreeNode *> q;
-    q.push(root);
+    Queue<TreeNode *> q;
+    q.enqueue(root);
     while (!q.empty())
     {
       int levelSize = q.size();
       while (levelSize--)
       {
-        TreeNode *curr = q.front();
-        q.pop();
+        TreeNode *curr = q._front();
+        q.dequeue();
         nodes.push_back(curr->val);
         if (curr->left)
-          q.push(curr->left);
+          q.enqueue(curr->left);
         if (curr->right)
-          q.push(curr->right);
+          q.enqueue(curr->right);
       }
     }
 
@@ -75,9 +143,21 @@ int main()
 
   TreeNode *balancedRoot = Solution().balanceBST(nodo_a);
 
-  cout << balancedRoot->left->val <<endl;
-  cout << balancedRoot->right->val <<endl;
-  cout << balancedRoot->right->right->val <<endl;
+  cout << balancedRoot->left->val << endl;
+  cout << balancedRoot->right->val << endl;
+  cout << balancedRoot->right->right->val << endl;
+
+  // TreeNode *nodo_a = new TreeNode(2);
+  // TreeNode *nodo_b = new TreeNode(1);
+  // TreeNode *nodo_c = new TreeNode(3);
+  // nodo_a->right = nodo_b;
+  // nodo_a->left = nodo_c;
+
+  // TreeNode *balancedRoot = Solution().balanceBST(nodo_a);
+
+  // cout << balancedRoot->val <<endl;
+  // cout << balancedRoot->left->val <<endl;
+  // cout << balancedRoot->right->val <<endl;
 
   return 0;
 }

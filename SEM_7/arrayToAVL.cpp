@@ -1,11 +1,76 @@
 #include <iostream>
 #include <vector>
-#include <queue>
-#include <cassert>
-#include <unordered_map>
-#include <cmath>
 #include <algorithm>
 using namespace std;
+
+template <class T>
+struct Node
+{
+  T val;
+  Node<T> *next;
+};
+
+template <class T>
+class Queue
+{
+  Node<T> *front;
+  Node<T> *rear;
+  int nodes;
+
+public:
+  Queue() : nodes(0) { front = rear = nullptr; }
+
+  int size()
+  {
+    return nodes;
+  }
+
+  T _front()
+  {
+    return front->val;
+  }
+
+  T _rear()
+  {
+    return rear->val;
+  }
+
+  bool empty()
+  {
+    return (!front && !rear) ? true : false;
+  }
+
+  void enqueue(T ele)
+  {
+    auto *temp = new Node<T>();
+    temp->val = ele;
+    temp->next = nullptr;
+
+    if (empty())
+      front = rear = temp;
+    else
+    {
+      rear->next = temp;
+      rear = temp;
+    }
+    nodes++;
+  };
+
+  void dequeue()
+  {
+    Node<T> *temp;
+    if (empty())
+      cout << endl << "Queue vacio." << endl;
+    else
+    {
+      temp = front;
+      if (front == rear)
+        rear = rear->next; // if length of queue is 1;
+      front = front->next;
+      nodes--;
+    }
+  };
+};
 
 struct TreeNode
 {
@@ -123,18 +188,18 @@ vector<int> levelOrder(TreeNode *root)
   if (root == nullptr)
     return vec;
 
-  queue<TreeNode *> q;
-  q.push(root);
+  Queue<TreeNode *> q;
+  q.enqueue(root);
 
   while (!q.empty())
   {
-    TreeNode *node = q.front();
+    TreeNode *node = q._front();
     vec.push_back(node->val);
-    q.pop();
+    q.dequeue();
     if (node->left != nullptr)
-      q.push(node->left);
+      q.enqueue(node->left);
     if (node->right != nullptr)
-      q.push(node->right);
+      q.enqueue(node->right);
   }
   return vec;
 }
@@ -144,13 +209,12 @@ int main()
   // case 1
   vector<int> array = {2, 4, 1, 3, 5, 6, 7};
   vector<int> expected = {4, 2, 6, 1, 3, 5, 7};
-  
+
   // case 2
   // vector<int> array = {8, 10, 15, 25, 49, 56, 60, 64, 75, 89, 100};
-	// vector<int> expected = {56, 15, 75, 8, 25, 60, 89, 10, 49, 64, 100};
-  
-  vector<int> ans = levelOrder(Solution().arrayToAVL(array));
+  // vector<int> expected = {56, 15, 75, 8, 25, 60, 89, 10, 49, 64, 100};
 
+  vector<int> ans = levelOrder(Solution().arrayToAVL(array));
 
   for (auto e : ans)
     cout << e << " ";
