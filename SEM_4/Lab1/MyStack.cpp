@@ -33,10 +33,7 @@ public:
     return q1.front();
   }
 
-  // Devuelve verdadero si la pila está vacía, falso en caso contrario.
-  bool empty() {
-    return q1.empty();
-  }
+  bool empty() { return q1.empty(); }
 };
 
 int main(){

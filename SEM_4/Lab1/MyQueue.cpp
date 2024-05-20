@@ -45,13 +45,7 @@ public:
     exit(0);
   };
 
-  /**
-   * Returns whether the queue is empty.
-   */
-  bool empty()
-  {
-    return s2.empty() && s1.empty();
-  };
+  bool empty(){ return s2.empty() && s1.empty(); };
 };
 
 
@@ -59,7 +53,6 @@ int main(){
   MyQueue<int> myQ;
   myQ.push(1);
   myQ.push(2);
-  
 
 
 
