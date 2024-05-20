@@ -44,31 +44,23 @@ public:
       nodes++;
     };
 
-    int dequeue(){
-      Node *temp;
-      int ele;
+    void dequeue(){
       if (empty())
         cout << endl << "Queue vacio." << endl;
       else {
-        temp = front;
-        ele = temp->val;
+        auto *temp = front;
         if (front == rear) rear = rear->next; // if length of queue is 1;
         front = front->next;
         delete temp;
         nodes--;
       }
-      return ele;
-
     };
     
     void display(){
-      if (empty()) cout << endl <<"Queue vacio." << endl;
-      else {
-          auto *temp = front;
-          while (temp) {
-              cout << temp->val << endl;
-              temp = temp->next;
-          }
+      auto *temp = front;
+      while (temp) {
+          cout << temp->val << endl;
+          temp = temp->next;
       }
     };
 };

@@ -38,28 +38,21 @@ public:
   }
 
 
-  void pop()
-  {
+  void pop(){
     if (empty())
-    {
       cout << endl << "Stack vacío" << endl;
-    }
     else
     {
       auto *temp = head;
-      cout << temp->val << " borrado" << endl;
       head = head->next;
       delete temp;
-      temp = nullptr;
       nodes--;
     }
   }
   
-  void display()
-  {
+  void display(){
     auto *temp = head;
-    while (temp != nullptr)
-    {
+    while (temp){
       cout << temp->val << endl;;
       temp = temp->next;
     }
