@@ -1,16 +1,18 @@
 #include <iostream>
 using namespace std;
 
+template <class T>
 struct Node
 {
   int val;
-  Node *next;
+  Node<T> *next;
 };
 
+template <class T>
 class Stack
 {
 private:
-  Node *head;
+  Node<T> *head;
   int nodes;
 
 public:
@@ -24,12 +26,12 @@ public:
     return !head;
   }
 
-  int top(){
+  T top(){
     return head->val;
   }
 
   void push(int x){
-    Node *newNode = new Node;
+    auto *newNode = new Node<T>;
     newNode->val = x;
     (empty())? newNode->next = nullptr : newNode->next = head;
     
@@ -61,7 +63,7 @@ public:
 
 int main()
 {
-  Stack s;
+  Stack<int> s;
   cout<< "Size: "<< s.size() <<endl;
   s.push(1);
   cout<< "Size: "<< s.size() <<endl;
