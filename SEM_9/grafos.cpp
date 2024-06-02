@@ -48,23 +48,13 @@ public:
 
   // Mostrar el grafo
   void displayGraph(){
-    for (auto& [id, vertex] : m_vertexes){ cout << "Vertice " << id << " (" << vertex->data << ") -> ";
-      for (auto& edge : vertex->edges){
+    for (auto [id, vertex] : m_vertexes){ cout << "Vertice " << id << " (" << vertex->data << ") -> ";
+      for (auto edge : vertex->edges){
         cout << "Arista al vertice " << (edge->vertex1 == vertex ? edge->vertex2->data : edge->vertex1->data) << " con peso " << edge->weight << "; ";
       }
       cout << endl;
     }
   }
-
-  // void displayGraph() {
-  //   for (auto pair : m_vertexes) {
-  //     cout << "Vertice " << pair.first << " (" << pair.second->data << ") -> ";
-  //     for (auto edge : pair.second->edges) {
-  //       cout << "Arista al vertice " << (edge->vertex1 == pair.second ? edge->vertex2->data : edge->vertex1->data) << " con peso " << edge->weight << "; ";
-  //     }
-  //     cout << endl;
-  //   }
-  // }
 };
 
 int main()
