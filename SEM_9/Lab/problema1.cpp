@@ -90,6 +90,9 @@ public:
   }
 };
 
+// TESTS
+
+/*
 int main()
 {
   Solution sol;
@@ -109,3 +112,4 @@ int main()
 
   return 0;
 }
+*/
