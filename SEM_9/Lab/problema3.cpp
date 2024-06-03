@@ -52,19 +52,15 @@ public:
   }
 
   // Función para encontrar el centro del grafo estrella
-  int findCenter()
-  {
+  int findCenter(){
     unordered_map<int, int> count;
 
     // contamos las apariciones de cada nodo
-    for (auto &[id, vertex] : m_vertexes)
-      count[id] = vertex->edges.size();
+    for (auto &[id, vertex] : m_vertexes) count[id] = vertex->edges.size();
 
     // buscamos el nodo que aparece en todas las aristas (n-1 veces)
-    for (auto &[node, cnt] : count)
-    {
-      if (cnt == m_vertexes.size() - 1)
-        return node;
+    for (auto &[node, cnt] : count){
+      if (cnt == m_vertexes.size() - 1) return node;
     }
 
     // si no se encuentra retornamos -1, pero al final del problema se menciona -> Las aristas dadas representan un grafo estrella válido (en caso de que no)
@@ -78,25 +74,21 @@ private:
   Graph<int, int> g;
 
 public:
-  int problem3(vector<vector<int>> &edges)
-  {
-    unordered_set<int> vertices; // inserción única de vértices en el grafo de manera eficiente
+  int problem3(vector<vector<int>> &edges){
+    unordered_set<int> vertices; // inserción única de vértices en el grafo de manera eficiente (utilizo unordered_set para evitar insertar dos mismo nodos)
 
     // inserto vértices y crear aristas según el vector -> edges
-    for (auto &edge : edges)
-    {
+    for (auto &edge : edges){
       int id1 = edge[0];
       int id2 = edge[1];
 
       // inserto vértices solo si no se han insertado previamente
-      if (vertices.find(id1) == vertices.end())
-      {
+      if (vertices.find(id1) == vertices.end()){
         g.insertVertex(id1, id1);
         vertices.insert(id1);
       }
 
-      if (vertices.find(id2) == vertices.end())
-      {
+      if (vertices.find(id2) == vertices.end()){
         g.insertVertex(id2, id2);
         vertices.insert(id2);
       }
