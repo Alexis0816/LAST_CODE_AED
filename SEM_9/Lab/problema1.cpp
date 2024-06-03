@@ -65,28 +65,28 @@ public:
     for (int i = 1; i <= n; ++i) g.insertVertex(i, i);
 
     // agrego aristas al grafo según las relaciones de confianza
-    for (const auto &relation : trust) g.createEdge(relation[0], relation[1], 1); // Asumiendo peso 1 para todas las relaciones de confianza
+    for (auto &relation : trust) g.createEdge(relation[0], relation[1], 1); // seteo peso 1 para todas las relaciones de confianza
 
-    // Contador de confianza para cada persona
-    vector<int> trusted_count(n + 1, 0); // Inicializar el contador de confianza para cada persona
+    // vector de contador de confianza para cada persona
+    vector<int> trusted_count(n + 1, 0); // inicializo el contador de confianza para cada persona en 0
 
-    for (const auto &relation : trust) trusted_count[relation[1]]++; // Incrementar el contador para la persona confiada (bi)
+    for (auto &relation : trust) trusted_count[relation[1]]++; // incremento el contador para la persona confiada
 
-    // Encontrar al juez del pueblo
+    // for anidado para encontrar al juez del pueblo
     for (int i = 1; i <= n; ++i){
-      if (trusted_count[i] == n - 1) { // Si una persona es confiada por todas las demás
+      if (trusted_count[i] == n - 1) { // si una persona es confiada por todas las demás
         bool is_judge = true;
         auto vertex = g.getVertex(i);
         for (auto &edge : vertex->edges){
-          if (edge->origin->data == i) { // Verificar si esa persona no confía en nadie (no tiene relaciones de confianza salientes)
+          if (edge->origin->data == i) { // verifico si esa persona no confía en nadie (no tiene relaciones de confianza salientes)
             is_judge = false;
             break;
           }
         }
-        if (is_judge) return i; // Devolver la etiqueta del juez del pueblo
+        if (is_judge) return i; // se devuelve la etiqueta del juez del pueblo
       }
     }
-    return -1; // Si no se encuentra ningún juez del pueblo
+    return -1; // si no se encuentra ningún juez del pueblo
   }
 };
 
