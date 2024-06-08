@@ -158,3 +158,5 @@ private:
         } delete [] prev_array;
     }
 };
+
+// HASH TABLE
