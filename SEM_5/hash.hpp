@@ -3,7 +3,9 @@
 #include <iterator>
 #include <exception>
 #include <functional>
+#include <string>
 #include <map>
+
 using namespace std;
 
 const int maxColision = 3;
@@ -33,7 +35,7 @@ public:
 
     void insert(TK key, TV value){
         if (fillFactor()>= maxFillFactor) {
-            cout<<"Tamanio actual: "<< _size()<<" Rehashing ..."<<endl; 
+            cout<<"Size actual: "<< _size()<<" Rehashing ..."<<endl; 
             resize();
         }
 
@@ -43,9 +45,8 @@ public:
         auto it0 = begin(array[index]);
         // actualiza llave-valor
         while (it0 != end(array[index])){
-            if ((*it0).key == key){
-                (*it0).value = value;
-                return;
+            if (it0->key == key){
+                it0->value = value;
             }
             ++it0;
         }
@@ -53,7 +54,7 @@ public:
         // no encontró la llave, significa que ese registro con la llave-valor se ha agregado correctamente.
         if(it0 == end(array[index])){
             array[index].push_front(entry);
-            size+=1;
+            size++;
         }
     };
 
@@ -63,12 +64,12 @@ public:
         auto it1 = begin(it0);
         
         while (it1 != end(it0)) {
-            if ((*it1).key == key) {
-                return (*it1).value;
+            if (it1->key == key) {
+                return it1->value;
             } else{ ++it1;}
         }
 
-        throw runtime_error("There is no entry wicth the key you are searching for");
+        throw runtime_error("No hay ninguna entrada con la clave que estas buscando");
     };
 
     void _delete(TK key){
@@ -77,14 +78,12 @@ public:
         auto it1 = it0.begin();
         auto prevIt1 = it0.before_begin();
         // Encuentra el elemento a borrar y su posición
-        while (it1 != end(it0) && (*it1).key != key) {
+        while (it1 != end(it0) && it1->key != key) {
             ++it1;
             ++prevIt1;
         }
         // Verifica si el elemento existe
-        if (it1 == end(it0)) {
-            throw ("La clave que intentas eliminar no existe");
-        }
+        if (it1 == end(it0)) { throw runtime_error("La clave que intentas eliminar no existe"); }
         // Borra el elemento de la lista
         it0.erase_after(prevIt1);
     };
@@ -96,12 +95,12 @@ public:
         auto it1 = begin(it0);
         
         while (it1 != end(it0)) {
-            if ((*it1).key == key) {
-                return (*it1).value;
+            if (it1->key == key) {
+                return it1->value;
             } else{ ++it1;}
         }
 
-        throw ("there is no an entry with the key you are searching for");
+        throw runtime_error("No hay ninguna entrada con la clave que estas buscando");
     };
 
     int _size(){
@@ -126,7 +125,7 @@ public:
         for (int i = 0; i < capacity; ++i) {
             auto it0 = begin(array[i]);
             while (it0 != end(array[i])) {
-                result[(*it0).key] = (*it0).value;
+                result[it0->key] = it0->value;
                 ++it0;
             }
         }
@@ -147,13 +146,13 @@ private:
     void resize(){
         int prev_capacity = capacity;
         capacity = capacity*2;
-        Set_from_Seq* prev_array = array;
+        auto* prev_array = array;
         array = new Set_from_Seq[capacity];
         for(int i=0; i<prev_capacity; ++i){
             auto it0 = prev_array[i];
             auto it1= begin(it0);
             while (it1 != end(it0)) {
-                insert((*it1).key, (*it1).value);
+                insert(it1->key, it1->value);
                 ++it1;
             }
         } delete [] prev_array;
