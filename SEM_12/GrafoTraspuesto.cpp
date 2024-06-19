@@ -58,6 +58,7 @@ public:
     }
 
     // Generar el grafo traspuesto
+    // Complejidad Logarítmica O(|V| + |E|)
     Graph<TV, TE> transpose() {
         Graph<TV, TE> transposedGraph;
 

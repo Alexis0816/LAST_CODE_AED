@@ -95,29 +95,29 @@ public:
     }
     
     // sobrecarga de operador []
-    TV& operator[](TK key){
-        int index = _hash(key);
-        auto it0 = array[index];
-        auto it1 = begin(it0);
+    // TV& operator[](TK key){
+    //     int index = _hash(key);
+    //     auto it0 = array[index];
+    //     auto it1 = begin(it0);
         
-        while (it1 != end(it0)) {
-            if (it1->key == key) {
-                return it1->value;
-            } else { 
-                ++it1;
-            }
-        }
+    //     while (it1 != end(it0)) {
+    //         if (it1->key == key) {
+    //             return it1->value;
+    //         } else { 
+    //             ++it1;
+    //         }
+    //     }
 
-        throw runtime_error("No hay ninguna entrada con la clave que estas buscando");
-    }
+    //     throw runtime_error("No hay ninguna entrada con la clave que estas buscando");
+    // }
 
     int _size(){
         return capacity;
     }
 
-    int bucket_size(int iList){
-        return distance(begin(array[iList]), end(array[iList]));
-    } //Cantidad de elementos por lista
+    // int bucket_size(int iList){
+    //     return distance(begin(array[iList]), end(array[iList]));
+    // } //Cantidad de elementos por lista
 
     // typename Set_from_Seq::iterator = auto
     auto _begin(int iList){
