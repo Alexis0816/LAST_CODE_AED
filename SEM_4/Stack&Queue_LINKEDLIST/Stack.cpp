@@ -4,7 +4,7 @@ using namespace std;
 template <class T>
 struct Node
 {
-  int val;
+  T val;
   Node<T> *next;
 };
 
@@ -30,7 +30,7 @@ public:
     return head->val;
   }
 
-  void push(int x){
+  void push(T x){
     auto *newNode = new Node<T>;
     newNode->val = x;
     (empty())? newNode->next = nullptr : newNode->next = head;
