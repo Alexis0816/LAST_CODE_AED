@@ -3,9 +3,9 @@
 #include <unordered_map>
 using namespace std;
 
+// Grafo Dirigido
 template <typename TV, typename TE>
-class Graph
-{
+class Graph{
 private:
     struct Edge;
 
@@ -21,6 +21,7 @@ private:
     };
 
     unordered_map<int, Vertex *> m_vertexes;
+    // m_vertexes: Es un unordered_map que mapea IDs de vértices (enteros) a punteros de tipo Vertex, almacenando así todos los vértices del grafo.
 
 public:
     // Añadir un vértice al grafo
@@ -85,7 +86,23 @@ private:
         }
         return -1; // En teoría nunca debería llegar aquí si el vértice existe en el grafo
     }
+    // findVertexId: Busca y devuelve el ID de un vértice dado su puntero. Itera sobre m_vertexes y compara los punteros para encontrar el ID correspondiente.
 };
+
+// Graph: Es la plantilla de la clase grafo. Utiliza dos tipos de plantilla TV (tipo de datos del vértice) y TE (tipo de datos del peso de la arista).
+
+// Vertex: Es una estructura interna que representa un vértice en el grafo. Contiene data que almacena la información del vértice y edges, que es una lista de punteros a las aristas que salen del vértice.
+
+// Edge: Es una estructura interna que representa una arista dirigida. Tiene punteros from y to que indican los vértices de origen y destino respectivamente, y weight que representa el peso de la arista.
+
+// insertVertex: Inserta un nuevo vértice en el grafo con un ID y datos específicos. Crea un nuevo objeto Vertex, le asigna los datos y lo inserta en el unordered_map m_vertexes usando el ID como clave.
+
+// createEdge: Crea una arista dirigida desde un vértice con ID fromId hacia un vértice con ID toId, con un peso especificado weight. Primero obtiene los punteros a los vértices de origen y destino desde m_vertexes, y si ambos existen, crea una nueva arista (Edge), la conecta al vértice de origen y la agrega a la lista de aristas salientes (edges) de ese vértice.
+
+// displayGraph: Muestra el grafo en consola. Itera sobre cada vértice y muestra sus aristas salientes. Utiliza findVertexId para obtener el ID de destino de cada arista y mostrarlo junto con el peso.
+
+// transpose: Genera y devuelve el grafo traspuesto. Crea un nuevo grafo transposedGraph con los mismos vértices pero aristas invertidas. Itera sobre cada vértice y sus aristas en el grafo original, y crea aristas invertidas en transposedGraph usando createEdge.
+
 
 int main() {
     Graph<string, int> graph;

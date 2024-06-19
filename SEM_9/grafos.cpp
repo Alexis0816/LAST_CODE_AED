@@ -4,8 +4,7 @@
 using namespace std;
 
 template <typename TV, typename TE>
-class Graph
-{
+class Graph{
 private:
   struct Edge; // Predeclaración de la estructura Edge
 
@@ -56,6 +55,17 @@ public:
     }
   }
 };
+
+// Graph: Esta clase representa un grafo no dirigido.
+
+// Vertex: Es una estructura que contiene los datos del vértice y una lista de aristas (edges) que conectan este vértice con otros vértices.
+// Edge: Es una estructura que representa una arista, conteniendo punteros a los vértices que conecta (vertex1 y vertex2) y el peso de la arista (weight).
+// m_vertexes: Es un unordered_map que mapea IDs de vértices a sus respectivos objetos Vertex.
+// insertVertex: Este método inserta un vértice en el grafo con un ID y datos data.
+
+// createEdge: Este método crea una arista no dirigida entre dos vértices dados por sus IDs (id1 y id2) con un peso weight. La arista se añade tanto a la lista de aristas del vertex1 como del vertex2.
+
+// displayGraph: Este método imprime en consola la representación del grafo, mostrando cada vértice y sus aristas con los respectivos pesos.
 
 int main()
 {
