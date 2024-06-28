@@ -1,5 +1,5 @@
 #include <iostream>
-#include <list> // double linked list
+#include <list> // Doubly linked list
 #include <unordered_map> // key-value
 using namespace std;
 
