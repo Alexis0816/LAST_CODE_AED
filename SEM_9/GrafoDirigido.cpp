@@ -86,7 +86,7 @@ public:
         ++it1;
       }
     }
-    throw runtime_error("No hay ninguna entrada con la clave que estas buscando");
+    throw runtime_error("La clave no existe");
   }
 
   void _delete(TK key)
@@ -240,6 +240,20 @@ public:
         ++it0;
       }
     }
+  }
+
+  // Función para encontrar el ID de un vértice dado el puntero al vértice
+  int findVertexId(Vertex* vertex)
+  {
+    auto keyValues = m_vertexes.key_value();
+    for (const auto& kv : keyValues)
+    {
+      if (kv.second == vertex)
+      {
+        return kv.first;
+      }
+    }
+    return -1; // Retorna -1 si el vértice no se encuentra (esto no debería ocurrir)
   }
 };
 
