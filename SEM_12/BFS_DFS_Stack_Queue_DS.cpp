@@ -255,18 +255,51 @@ public:
 };
 
 int main() {
-  Graph<string, int> g;
+  Graph<char, int> g;
 
-  g.insertVertex(1, "A");
-  g.insertVertex(2, "B");
-  g.insertVertex(3, "C");
-  g.insertVertex(4, "D");
-  g.insertVertex(5, "E");
+  g.insertVertex(1, 'A');
+  g.insertVertex(2, 'B');
+  g.insertVertex(3, 'C');
+  g.insertVertex(4, 'D');
+  g.insertVertex(5, 'E');
 
   g.createEdge(1, 2, 1);
   g.createEdge(1, 3, 1);
   g.createEdge(2, 4, 1);
   g.createEdge(3, 5, 1);
+
+  // // Añadir vértices
+  // g.insertVertex(1, 'J');
+  // g.insertVertex(2, 'F');
+  // g.insertVertex(3, 'C');
+  // g.insertVertex(4, 'D');
+  // g.insertVertex(5, 'A');
+  // g.insertVertex(6, 'H');
+  // g.insertVertex(7, 'B');
+  // g.insertVertex(8, 'E');
+  // g.insertVertex(9, 'G');
+  // g.insertVertex(10, 'I');
+
+  // // Añadir aristas
+  // g.createEdge(1, 2, 4);   // J - F | 4
+  // g.createEdge(2, 3, 7);   // F - C | 7
+  // g.createEdge(3, 4, 11);  // C - D | 11
+  // g.createEdge(2, 4, 58);  // F - D | 58
+  // g.createEdge(2, 5, 17);  // F - A | 17
+  // g.createEdge(1, 5, 14);  // J - A | 14
+  // g.createEdge(3, 6, 24);  // C - H | 24
+  // g.createEdge(4, 5, 42);  // D - A | 42
+  // g.createEdge(1, 8, 5);   // J - E | 5
+  // g.createEdge(4, 6, 26);  // D - H | 26
+  // g.createEdge(4, 7, 19);  // D - B | 19
+  // g.createEdge(5, 7, 5);   // A - B | 5
+  // g.createEdge(5, 8, 11);  // A - E | 11
+  // g.createEdge(6, 7, 64);  // H - B | 64
+  // g.createEdge(8, 10, 29); // E - I | 29
+  // g.createEdge(6, 9, 3);   // H - G | 3
+  // g.createEdge(7, 9, 52);  // B - G | 52
+  // g.createEdge(7, 10, 51); // B - I | 51
+  // g.createEdge(10, 9, 33); // I - G | 33
 
   g.displayGraph();
 
