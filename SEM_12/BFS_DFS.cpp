@@ -96,21 +96,19 @@ public:
     stack<Vertex *> s;
 
     auto startVertex = m_vertexes[startId];
+    visited.insert(startVertex);
     s.push(startVertex);
 
     while (!s.empty()) {
       auto vertex = s.top();
       s.pop();
+      cout << vertex->data << " ";
 
-      if (visited.find(vertex) == visited.end()) {
-        cout << vertex->data << " ";
-        visited.insert(vertex);
-
-        for (auto edge : vertex->edges) {
-          auto adjVertex = edge->vertex1 == vertex ? edge->vertex2 : edge->vertex1;
-          if (visited.find(adjVertex) == visited.end()) {
-            s.push(adjVertex);
-          }
+      for (auto edge : vertex->edges) {
+        auto adjVertex = edge->vertex1 == vertex ? edge->vertex2 : edge->vertex1;
+        if (visited.find(adjVertex) == visited.end()) {
+          visited.insert(adjVertex);
+          s.push(adjVertex);
         }
       }
     }

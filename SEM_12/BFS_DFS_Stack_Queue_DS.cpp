@@ -226,28 +226,27 @@ public:
   }
 
   // Recorrido por profundidad (DFS)
+  // O(V+E)
   void DFS(int startId) {
     if (m_vertexes.find(startId) == m_vertexes.end()) return;
 
-    DisjoinSet<Vertex *> visited;
+    DisjoinSet<Vertex *> visited; // conjunto de vértices visitados
     Stack<Vertex *> s;
 
     auto startVertex = m_vertexes[startId];
+    visited.mark_visited(startVertex);
     s.push(startVertex);
 
     while (!s.empty()) {
       auto vertex = s.top();
       s.pop();
+      cout << vertex->data << " ";
 
-      if (!visited.is_visited(vertex)) {
-        cout << vertex->data << " ";
-        visited.mark_visited(vertex);
-
-        for (auto edge : vertex->edges) {
-          auto adjVertex = edge->vertex1 == vertex ? edge->vertex2 : edge->vertex1;
-          if (!visited.is_visited(adjVertex)) {
-            s.push(adjVertex);
-          }
+      for (auto edge : vertex->edges) {
+        auto adjVertex = edge->vertex1 == vertex ? edge->vertex2 : edge->vertex1;
+        if (!visited.is_visited(adjVertex)) {
+          visited.mark_visited(adjVertex);
+          s.push(adjVertex);
         }
       }
     }
