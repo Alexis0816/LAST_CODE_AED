@@ -3,8 +3,7 @@
 using namespace std;
 
 template <class T>
-class Node
-{
+class Node{
 public:
   T data;
   int pos_row;
@@ -16,8 +15,7 @@ public:
 };
 
 template <class T>
-class SparseMatrix
-{
+class SparseMatrix{
 private:
   vector<Node<T> *> rows; // Vector de punteros a nodos para las filas
   vector<Node<T> *> cols; // Vector de punteros a nodos para las columnas
@@ -25,84 +23,60 @@ private:
   int n_cols;
 
 public:
-  SparseMatrix(int rows, int cols) : n_rows(rows), n_cols(cols)
-  {
+  SparseMatrix(int rows, int cols) : n_rows(rows), n_cols(cols){
     this->rows.resize(rows, nullptr);
     this->cols.resize(cols, nullptr);
   }
 
-  void insert(int r, int c, T value)
-  {
+  void insert(int r, int c, T value){
     Node<T> *newNode = new Node<T>(r, c, value);
 
-    if (!rows[r])
-    {
-      rows[r] = newNode;
-    }
-    else
-    {
+    if (!rows[r]){ rows[r] = newNode;} 
+    else {
       Node<T> *temp = rows[r];
       Node<T> *prev = nullptr;
-      while (temp && temp->pos_col < c)
-      {
+      while (temp && temp->pos_col < c){
         prev = temp;
         temp = temp->next_row;
       }
-      if (prev)
-      {
+      if (prev){
         prev->next_row = newNode;
       }
-      else
-      {
-        rows[r] = newNode;
-      }
+      else { rows[r] = newNode; }
+
       newNode->next_row = temp;
     }
 
-    if (!cols[c])
-    {
-      cols[c] = newNode;
-    }
-    else
-    {
+    if (!cols[c]) { cols[c] = newNode; }
+    else {
       Node<T> *temp = cols[c];
       Node<T> *prev = nullptr;
-      while (temp && temp->pos_row < r)
-      {
+      while (temp && temp->pos_row < r){
         prev = temp;
         temp = temp->next_col;
       }
-      if (prev)
-      {
-        prev->next_col = newNode;
-      }
-      else
-      {
-        cols[c] = newNode;
-      }
+      if (prev) { prev->next_col = newNode; }
+      else { cols[c] = newNode; }
+
       newNode->next_col = temp;
     }
   }
 
-  void display()
-  {
-    for (int i = 0; i < n_rows; ++i){
+  void display() {
+    for (int i = 0; i < n_rows; ++i) {
       cout<< "Row "<< i+1 <<": ";
-      Node<T> *temp = rows[i];
-      for (int j = 0; j < n_cols; ++j)
-      {
-        if (temp && temp->pos_col == j)
-        {
+      Node<T>* temp = rows[i];
+      for (int j = 0; j < n_cols; ++j) {
+        if (temp && temp->pos_col == j) {
           cout << temp->data << " ";
           temp = temp->next_row;
-        }
-        else
-        {
+        } else {
           cout << "0 ";
         }
       }
       cout << endl;
     }
+    cout << endl;
   }
 };
 

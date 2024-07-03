@@ -43,22 +43,32 @@ public:
     Node<T>* newNode = new Node<T>{r, c, value};
     if (!rows[r]) { rows[r] = newNode; } 
     else {
-      Node<T>* temp = rows[r];
-      while (temp->next_row && temp->next_row->pos_col < c) {
+      Node<T> *temp = rows[r];
+      Node<T> *prev = nullptr;
+      while (temp && temp->pos_col < c){
+        prev = temp;
         temp = temp->next_row;
       }
-      newNode->next_row = temp->next_row;
-      temp->next_row = newNode;
+      if (prev){
+        prev->next_row = newNode;
+      }
+      else { rows[r] = newNode; }
+      
+      newNode->next_row = temp;
     }
 
-    if (!cols[c]) { cols[c] = newNode; } 
+    if (!cols[c]) { cols[c] = newNode; }
     else {
-      Node<T>* temp = cols[c];
-      while (temp->next_col && temp->next_col->pos_row < r) {
+      Node<T> *temp = cols[c];
+      Node<T> *prev = nullptr;
+      while (temp && temp->pos_row < r){
+        prev = temp;
         temp = temp->next_col;
       }
-      newNode->next_col = temp->next_col;
-      temp->next_col = newNode;
+      if (prev) { prev->next_col = newNode; }
+      else { cols[c] = newNode; }
+      
+      newNode->next_col = temp;
     }
   }
 
@@ -188,13 +198,19 @@ public:
 
     for (int i = 0; i < n_rows; ++i) {
       Node<T>* temp1 = rows[i];
-      while (temp1) {
-        Node<T>* temp2 = other.cols[temp1->pos_col];
-        while (temp2) {
-          result.insert(i, temp2->pos_col, result.get(i, temp2->pos_col) + temp1->data * temp2->data);
-          temp2 = temp2->next_col;
+      Node<T>* temp2 = other.rows[i];
+      while (temp1 || temp2) {
+        if (temp1 && (!temp2 || temp1->pos_col < temp2->pos_col)) {
+          result.insert(temp1->pos_row, temp1->pos_col, temp1->data);
+          temp1 = temp1->next_row;
+        } else if (temp2 && (!temp1 || temp2->pos_col < temp1->pos_col)) {
+          result.insert(temp2->pos_row, temp2->pos_col, -temp2->data);
+          temp2 = temp2->next_row;
+        } else {
+          result.insert(temp1->pos_row, temp1->pos_col, temp1->data * temp2->data);
+          temp1 = temp1->next_row;
+          temp2 = temp2->next_row;
         }
-        temp1 = temp1->next_row;
       }
     }
     return result;
@@ -202,39 +218,49 @@ public:
 
   void display() {
     for (int i = 0; i < n_rows; ++i) {
+      cout<< "Row "<< i+1 <<": ";
       Node<T>* temp = rows[i];
       for (int j = 0; j < n_cols; ++j) {
         if (temp && temp->pos_col == j) {
-          std::cout << temp->data << " ";
+          cout << temp->data << " ";
           temp = temp->next_row;
         } else {
-          std::cout << "0 ";
+          cout << "0 ";
         }
       }
-      std::cout << std::endl;
+      cout << endl;
     }
+    cout << endl;
   }
 };
 
 int main() {
-  SparseMatrix<int> mat1(4, 4);
+  SparseMatrix<int> mat1(5, 5);
   mat1.insert(1, 1, 5);
   mat1.insert(1, 3, 1);
   mat1.insert(2, 2, 9);
   mat1.insert(4, 1, 3);
   mat1.insert(4, 4, 11);
 
-  SparseMatrix<int> mat2(4, 4);
+  SparseMatrix<int> mat2(5, 5);
   mat2.insert(1, 1, 5);
   mat2.insert(1, 3, 1);
   mat2.insert(2, 2, 9);
   mat2.insert(4, 1, 3);
   mat2.insert(4, 4, 11);
 
-  SparseMatrix<int> result = mat1.add(mat2);
+  auto resultAdd = mat1.add(mat2);
+  auto resultSubstr = mat1.subtract(mat2);
+  auto resultMult = mat1.multiply(mat2);
+  auto resultTranspose = mat1.transpose();
 
-  // Display results or further operations as needed.
   mat1.display() ;
+  mat2.display() ;
+
+  resultAdd.display() ;  
+  resultSubstr.display() ;
+  resultMult.display() ;
+  resultTranspose.display(); 
 
   return 0;
 }
