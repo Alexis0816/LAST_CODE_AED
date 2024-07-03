@@ -344,7 +344,8 @@ int main()
     resultSubstr.display() ;
     resultMult.display() ;
     resultTranspose.display();
-
+    
+    cout << resultMult.get(4,4) << endl;
 
     return 0;
 }
