@@ -199,6 +199,7 @@ public:
   }
 
   // Recorrido por anchura (BFS)
+  // O(V+E)
   void BFS(int startId) {
     if (m_vertexes.find(startId) == m_vertexes.end()) return;
 
