@@ -172,6 +172,7 @@ public:
         if (newX >= 0 && newX < rows && newY >= 0 && newY < cols)
         {
           int effort = max(currentEffort, abs(heights[newX][newY] - heights[x][y]));
+          // comparo y actualizo el esfuerzo mínimo (RELAJACIONES)
           if (effort < minEffort[newX][newY])
           {
             minEffort[newX][newY] = effort;
