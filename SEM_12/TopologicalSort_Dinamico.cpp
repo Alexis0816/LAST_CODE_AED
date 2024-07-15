@@ -171,31 +171,33 @@ private:
 };
 
 int main() {
-    Graph<string, int> g;
+  Graph<string, int> g;
+  
+  g.insertVertex(10, "A");
+  g.insertVertex(2, "B");
+  g.insertVertex(34, "C");
+  g.insertVertex(4, "D");
+  g.insertVertex(54, "E");
+  g.insertVertex(6, "F");
 
-    g.insertVertex(1, "A");
-    g.insertVertex(2, "B");
-    g.insertVertex(3, "C");
-    g.insertVertex(4, "D");
-    g.insertVertex(5, "E");
+  g.createEdge(10, 2, 1);
+  g.createEdge(10, 34, 1);
+  g.createEdge(2, 4, 1);
+  g.createEdge(4, 6, 1);
+  g.createEdge(34, 54, 1);
 
-    g.createEdge(1, 2, 1);
-    g.createEdge(1, 3, 1);
-    g.createEdge(2, 4, 1);
-    g.createEdge(3, 5, 1);
+  cout << endl << "Grafo Original:" << endl;
+  g.displayGraph();
 
-    cout << endl << "Grafo Original:" << endl;
-    g.displayGraph();
+  cout << endl << "Ordenamiento Topologico:" << endl;
+  int size = 0;
+  int *topoSort = g.topologicalSort(size);
+  for (int i = 0; i < size; ++i) {
+    cout << topoSort[i] << " ";
+  }
+  cout << endl << endl;
 
-    cout << endl << "Ordenamiento Topologico:" << endl;
-    int size = 0;
-    int *topoSort = g.topologicalSort(size);
-    for (int i = 0; i < size; ++i) {
-        cout << topoSort[i] << " ";
-    }
-    cout << endl << endl;
+  delete[] topoSort; // Liberar memoria asignada al arreglo dinámico
 
-    delete[] topoSort; // Liberar memoria asignada al arreglo dinámico
-
-    return 0;
+  return 0;
 }
