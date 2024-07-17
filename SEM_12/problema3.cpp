@@ -82,7 +82,7 @@ class Solution
   bool isBipartite(vector<vector<int>> &graph)
   {
     int n = graph.size();
-    vector<int> color(n, -1); // -1 means no color, 0 and 1 are the two colors
+    vector<int> color(n, -1); // -1 significa no color, 0 and 1 are the two colors
     // -1 significa sin colorear, 0 and 1 son 2 colores
 
     for (int start = 0; start < n; ++start)
@@ -91,7 +91,7 @@ class Solution
       { // Si el vértice no está coloreado
         Queue<int> q;
         q.enqueue(start);
-        color[start] = 0; // default color 0
+        color[start] = 0; // default color 0 xd
 
         while (!q.empty())
         {
@@ -102,13 +102,13 @@ class Solution
           {
             if (color[neighbor] == -1)
             {
-              // Si el vecino no está coloreado, colorealo con el color contrario
+              // Si el vecino no está coloreado, coloreo color opuesto
               color[neighbor] = 1 - color[node];
               q.enqueue(neighbor);
             }
             else if (color[neighbor] == color[node])
             {
-              return false; // Si el vecino está coloreado con el mismo color, el grafo no es bipartito
+              return false; // Si el vecino tiene el mismo color, el grafo no es bipartito
             }
           }
         }
