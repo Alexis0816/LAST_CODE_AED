@@ -15,34 +15,34 @@ class CircularLinkedList
 {
 private:
     int nodes;
-    Node *sentinel;
+    Node *head; //sentinel
 
 public:
     ~CircularLinkedList()
     {
         clear();
-        delete sentinel;
+        delete head;
     }
 
     CircularLinkedList() : nodes(0)
     {
-        sentinel = new Node;
-        sentinel->next = sentinel;
-        sentinel->prev = sentinel;
+        head = new Node;
+        head->next = head;
+        head->prev = head;
     }
 
     int front()
     {
         if (empty())
             throw out_of_range("List is empty");
-        return sentinel->next->data;
+        return head->next->data;
     }
 
     int back()
     {
         if (empty())
             throw out_of_range("List is empty");
-        return sentinel->prev->data;
+        return head->prev->data;
     }
 
     void push_front(int data)
@@ -50,10 +50,10 @@ public:
         Node* nodo = new Node;
         nodo->data = data;
 
-        nodo->next = sentinel->next;
-        nodo->prev = sentinel;
-        sentinel->next->prev = nodo;
-        sentinel->next = nodo;
+        nodo->next = head->next;
+        nodo->prev = head;
+        head->next->prev = nodo;
+        head->next = nodo;
         
         nodes++;
     }
@@ -63,10 +63,10 @@ public:
         Node* nodo = new Node;
         nodo->data = data;
 
-        nodo->next = sentinel;
-        nodo->prev = sentinel->prev;
-        sentinel->prev->next = nodo;
-        sentinel->prev = nodo;
+        nodo->next = head;
+        nodo->prev = head->prev;
+        head->prev->next = nodo;
+        head->prev = nodo;
 
         nodes++;
     }
@@ -76,11 +76,11 @@ public:
         if (empty())
             throw out_of_range("List is empty");
 
-        Node* oldHead = sentinel->next;
+        Node* oldHead = head->next;
         int data = oldHead->data;
 
-        sentinel->next = oldHead->next;
-        oldHead->next->prev = sentinel;
+        head->next = oldHead->next;
+        oldHead->next->prev = head;
         delete oldHead;
 
         --nodes;
@@ -92,11 +92,11 @@ public:
         if (empty())
             throw out_of_range("List is empty");
 
-        Node* oldTail = sentinel->prev;
+        Node* oldTail = head->prev;
         int data = oldTail->data;
 
-        sentinel->prev = oldTail->prev;
-        oldTail->prev->next = sentinel;
+        head->prev = oldTail->prev;
+        oldTail->prev->next = head;
         delete oldTail;
 
         --nodes;
@@ -120,10 +120,10 @@ public:
         int i;
         Node *trav;
         if (pos > size() / 2)
-            for (i = size(), trav = sentinel->prev; i != pos; i--)
+            for (i = size(), trav = head->prev; i != pos; i--)
                 trav = trav->prev;
         else
-            for (i = 0, trav = sentinel->next; i != pos; i++)
+            for (i = 0, trav = head->next; i != pos; i++)
                 trav = trav->next;
 
         insertNode(trav, elem);
@@ -146,10 +146,10 @@ public:
         int i;
         Node *trav;
         if (pos < size() / 2)
-            for (i = 0, trav = sentinel->next; i != pos; i++)
+            for (i = 0, trav = head->next; i != pos; i++)
                 trav = trav->next;
         else
-            for (i = size() - 1, trav = sentinel->prev; i != pos; i--)
+            for (i = size() - 1, trav = head->prev; i != pos; i--)
                 trav = trav->prev;
 
         return removeNode(trav);
@@ -157,7 +157,7 @@ public:
 
     int &operator[](int pos)
     {
-        Node *iter = sentinel->next;
+        Node *iter = head->next;
         for (int i = 0; i < pos; i++)
         {
             iter = iter->next;
@@ -182,7 +182,7 @@ public:
     {
         if (empty()) return;
         
-        Node *current = sentinel->next;
+        Node *current = head->next;
         Node *temp = nullptr;
         
         do
@@ -191,11 +191,11 @@ public:
             current->prev = current->next;
             current->next = temp;
             current = current->prev;
-        } while (current != sentinel);
+        } while (current != head);
 
         if (temp != nullptr)
         {
-            sentinel->next = temp->prev;
+            head->next = temp->prev;
         }
     }
 
@@ -203,12 +203,12 @@ public:
     {
         if (empty()) return;
         
-        Node *temp = sentinel->next;
+        Node *temp = head->next;
         do
         {
             cout << temp->data << " ";
             temp = temp->next;
-        } while (temp != sentinel);
+        } while (temp != head);
         cout << endl;
     }
 };
